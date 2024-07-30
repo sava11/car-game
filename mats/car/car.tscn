@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://madpeanlhsb1"]
+
+[ext_resource type="Script" path="res://mats/car/car.gd" id="1_jl8b0"]
+[ext_resource type="Texture2D" uid="uid://dh14d1fbe63ro" path="res://mats/car/SportsCar-Sheet.png" id="2_lsecu"]
+[ext_resource type="Script" path="res://addons/linepath2d/linepath2d.gd" id="3_ua2yt"]
+[ext_resource type="Texture2D" uid="uid://dcy0mebsspsjj" path="res://icon.svg" id="4_ve4hn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_snqno"]
+radius = 28.0
+height = 122.0
+
+[sub_resource type="Curve2D" id="Curve2D_j41oq"]
+_data = {
+"points": PackedVector2Array(0, 0, 400, 0, 0, 0, -400, 0, 400, 0, 394, 352)
+}
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_lou11"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="car" type="RigidBody2D"]
+position = Vector2(104, 56)
+center_of_mass_mode = 1
+center_of_mass = Vector2(2.08167e-16, 34)
+script = ExtResource("1_jl8b0")
+
+[node name="sp" type="Sprite2D" parent="."]
+texture = ExtResource("2_lsecu")
+hframes = 7
+
+[node name="c" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_snqno")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(2.08165e-12, 34)
+
+[node name="LinePath2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_j41oq")
+script = ExtResource("3_ua2yt")
+_curve = SubResource("Curve2D_j41oq")
+width = 60.0
+width_profile = SubResource("Curve_lou11")
+fill_texture = ExtResource("4_ve4hn")
+fill_texture_mode = 1
+border_antialiased = true
