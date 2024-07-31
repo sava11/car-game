@@ -1,40 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://madpeanlhsb1"]
+[gd_scene load_steps=4 format=3 uid="uid://madpeanlhsb1"]
 
 [ext_resource type="Script" path="res://mats/car/car.gd" id="1_jl8b0"]
 [ext_resource type="Texture2D" uid="uid://dh14d1fbe63ro" path="res://mats/car/SportsCar-Sheet.png" id="2_lsecu"]
-[ext_resource type="Script" path="res://mats/car/wheel_data.gd" id="2_rrljc"]
-
-[sub_resource type="Resource" id="Resource_xti3k"]
-script = ExtResource("2_rrljc")
-can_ratate = true
-can_stop = true
-can_move = false
-position = Vector2(24, -36)
-direction = Vector2(1, 2.08165e-12)
-
-[sub_resource type="Resource" id="Resource_ayiyp"]
-script = ExtResource("2_rrljc")
-can_ratate = true
-can_stop = true
-can_move = false
-position = Vector2(-24, -36)
-direction = Vector2(1, 2.08165e-12)
-
-[sub_resource type="Resource" id="Resource_aure1"]
-script = ExtResource("2_rrljc")
-can_ratate = false
-can_stop = true
-can_move = true
-position = Vector2(-24, 34)
-direction = Vector2(1, 2.08165e-12)
-
-[sub_resource type="Resource" id="Resource_37wol"]
-script = ExtResource("2_rrljc")
-can_ratate = false
-can_stop = true
-can_move = true
-position = Vector2(24, 34)
-direction = Vector2(1, 2.08165e-12)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_snqno"]
 radius = 28.0
@@ -50,7 +17,6 @@ max_contacts_reported = 10
 contact_monitor = true
 script = ExtResource("1_jl8b0")
 rotation_degrees_offset = 0.0
-wheels = Array[ExtResource("2_rrljc")]([SubResource("Resource_xti3k"), SubResource("Resource_ayiyp"), SubResource("Resource_aure1"), SubResource("Resource_37wol")])
 
 [node name="sp" type="Sprite2D" parent="."]
 texture = ExtResource("2_lsecu")

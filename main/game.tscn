@@ -36,7 +36,8 @@ fill_texture_mode = 1
 position = Vector2(232, 200)
 rotation = 3.48787e-16
 mass = 2200.0
-speed_max = 50000.0
+speed_max = 10000.0
+rotation_degrees_speeed = 90.0
 
 [node name="Camera2D" type="Camera2D" parent="world/car"]
 

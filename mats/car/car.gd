@@ -2,13 +2,13 @@ class_name car extends RigidBody2D
 @export_range(0,999,0.001,"or_greater","suffix:px/s") var speed_max:float=100
 @export_range(0,999,0.001,"or_greater","suffix:px/s") var acceleration:float=10
 @export_range(0,999,0.001,"or_greater","suffix:px/s") var deceleration:float=10
-@export_range(0,999,0.001,"or_greater","suffix:deg/s") var max_rotation_degrees:float=30
 @export_range(0,999,0.001,"or_greater","suffix:deg/s") var rotation_degrees_speeed:float=10
-@export_range(0,999,0.001,"or_greater","suffix:deg/s") var rotation_degrees_offset:float=90
-@export var wheels:Array[wheel_data]
-var gravity:float=980
+@export_range(-180,180,0.001,"or_greater","suffix:deg/s") var rotation_degrees_offset:float=90
+
+var gravity:float=98
 var current_speed:float=0
 var input_vector:=Vector2.ZERO
+var cur_rot:float=0
 # преобразует вектор в угол
 func vec_to_deg(vec:Vector2)->float:
 	return snapped((180/PI)*-atan2(-vec.y,vec.x),0.000001)
@@ -25,24 +25,12 @@ func _integrate_forces(st:PhysicsDirectBodyState2D):
 		st.apply_impulse(st.get_contact_impulse(contact_index),st.get_contact_local_position(contact_index))
 		
 	movement(step)
-	var dir=Vector2.ZERO
-	var pos=Vector2.ZERO
-	for wheel in wheels:
-		if wheel.can_ratate:
-			wheel.direction=deg_to_vec(max_rotation_degrees*input_vector.x)
-			pass
-			#wheel.direction=deg_to_vec(move_toward(vec_to_deg(wheel.direction)+rotation_degrees-rotation_degrees_offset,max_rotation_degrees*input_vector.x,rotation_degrees_speeed*step))
-			
-		dir+=wheel.direction/float(wheels.size())
-		pos+=wheel.position/float(wheels.size())
-	print(linear_velocity," ",dir," ",pos," ",vec_to_deg(dir)," ",Input.get_gravity())
+	cur_rot+=input_vector.x*step*rotation_degrees_speeed
 	
 	if input_vector.y!=0:
-		var global_dir:=deg_to_vec(vec_to_deg(input_vector)+rotation_degrees-rotation_degrees_offset+vec_to_deg(dir))
-		st.apply_impulse(
-		speed_max*global_dir,
-		deg_to_vec(vec_to_deg(pos)-rotation_degrees-rotation_degrees_offset)
-		)
+		var global_dir:=deg_to_vec(90*input_vector.y+cur_rot+rotation_degrees+rotation_degrees_offset)
+		st.apply_impulse(speed_max*global_dir)
+	print(cur_rot)
 	##rotate(vec_to_deg(dir*speed_max*input_vector+pos)-rotation_degrees+90)
 	#global_vel+=deg_to_vec(rotation_degrees+90)*input_vector.y*speed_max*step*gravity
 	var global_vel=st.get_linear_velocity()
